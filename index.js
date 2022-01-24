@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
+const ObjectId = require("mongodb").ObjectId;
 const port = process.env.PORT || 5000;
 
 app.use(cors());
@@ -134,15 +135,15 @@ async function run() {
             res.json({ admin: isAdmin });
         });
 
-        //   // delete booking
-        //   app.delete("/booking/:id", async (req, res) => {
-        //     const id = req.params.id;
-        //     console.log("delete user with id", id);
-        //     const query = { _id: ObjectId(id) };
-        //     const result = await bookingCollection.deleteOne(query);
-        //     console.log("deleting user with id", result);
-        //     res.json(result);
-        //   });
+        // delete userProducts
+        app.delete("/usersProducts/:id", async (req, res) => {
+            const id = req.params.id;
+            console.log("delete user with id", id);
+            const query = { _id: ObjectId(id) };
+            const result = await usersProductsCollection.deleteOne(query);
+            console.log("deleting user with id", result);
+            res.json(result);
+        });
     } finally {
         // await client.close()
     }
