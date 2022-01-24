@@ -22,6 +22,22 @@ async function run() {
         const reviewsCollection = database.collection("reviews");
         const featuredCollection = database.collection("featured");
         const usersCollection = database.collection("users");
+        const usersProductsCollection = database.collection("usersProducts");
+
+        // usersProducts post
+        app.post("/usersProducts", async (req, res) => {
+            const userProducts = req.body;
+            const result = await usersProductsCollection.insertOne(userProducts);
+            console.log(result);
+            res.json(result);
+        });
+
+        // get all usersProducts
+        app.get("/usersProducts", async (req, res) => {
+            const cursor = usersProductsCollection.find({});
+            const userProducts = await cursor.toArray();
+            res.json(userProducts);
+        });
 
         //all new products post
         app.post("/newProducts", async (req, res) => {
